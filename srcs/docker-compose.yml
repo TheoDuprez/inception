@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+  mariadb:
+    build:
+      context: ./requirements/mariadb
+      dockerfile: Dockerfile
+    networks:
+      - inception
+    ports:
+      - "8080:3306"
+  wordpress:
+    depends_on:
+      - mariadb
+    build:
+      context: ./requirements/wordpress
+      dockerfile: Dockerfile
+    networks:
+      - inception
+
+networks:
+  inception:
+    name: inception
+    driver: bridge
+
