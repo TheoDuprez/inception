@@ -7,16 +7,42 @@ services:
       dockerfile: Dockerfile
     networks:
       - inception
-    ports:
-      - "8080:3306"
+    env_file:
+      - .env
   wordpress:
+    volumes:
+      - type: volume
+        source: wordpressVolume
+        target: /var/www/wordpress
     depends_on:
       - mariadb
+    env_file:
+      - .env
     build:
       context: ./requirements/wordpress
       dockerfile: Dockerfile
     networks:
       - inception
+  nginx:
+    build:
+      context: ./requirements/nginx
+      dockerfile: Dockerfile
+    networks:
+      - inception
+    env_file:
+      - .env
+    depends_on:
+      - wordpress
+    ports:
+      - "8080:80"
+    volumes:
+      - type: volume
+        source: wordpressVolume
+        target: /usr/share/nginx/wordpress
+
+volumes:
+  wordpressVolume:
+#    external: true
 
 networks:
   inception:
