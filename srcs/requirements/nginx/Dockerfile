@@ -5,11 +5,11 @@ RUN apt-get update  \
     && apt-get clean  \
     && rm -rf /var/lib/apt/lists/*
 
-COPY ./conf/nginx.conf /etc/nginx/nginx.conf
+COPY ./conf/nginx.conf /etc/nginx/conf.d/mynginx.conf
 
-RUN mkdir -p /usr/share/nginx/wordpress
-RUN chown -R www-data:www-data /usr/share/nginx/wordpress
-RUN chmod -R 755 /usr/share/nginx/wordpress
+RUN mkdir -p /var/www/wordpress
+RUN chown -R www-data:www-data /var/www/wordpress
+RUN chmod -R 755 /var/www/wordpress
 
 RUN #ls /usr/share/nginx
 

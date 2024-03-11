@@ -38,7 +38,7 @@ services:
     volumes:
       - type: volume
         source: wordpressVolume
-        target: /usr/share/nginx/wordpress
+        target: /var/www/wordpress
 
 volumes:
   wordpressVolume:

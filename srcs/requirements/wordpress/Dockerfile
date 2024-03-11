@@ -14,15 +14,18 @@ RUN apt-get update  \
     && apt-get clean  \
     && rm -rf /var/lib/apt/lists/*
 
+RUN mkdir -p /var/www && curl -o /var/www/latest-fr_FR.tar.gz https://fr.wordpress.org/latest-fr_FR.tar.gz && \
+    tar -xzf /var/www/latest-fr_FR.tar.gz -C /var/www && \
+    rm var/www/latest-fr_FR.tar.gz && \
+    chown -R www-data:www-data /var/www/wordpress
+
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar > wp-cli.phar
 
 RUN chmod +x wp-cli.phar
 
 RUN mv wp-cli.phar /usr/local/bin/wp-cli.phar
 
-RUN wp-cli.phar core download --allow-root --path=/var/www/wordpress
-
-EXPOSE 8080
+EXPOSE 8080 80
 
 COPY ./tools/install.sh ./etc
 
