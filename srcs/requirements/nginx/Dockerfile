@@ -13,7 +13,10 @@ RUN chmod -R 755 /var/www/wordpress
 
 RUN #ls /usr/share/nginx
 
+EXPOSE 80
+
 CMD [ "nginx", "-g", "daemon off;" ]
+
 #CMD [ "ls", "/usr/share/nginx/wordpress" ]
 
 #EXPOSE 9000

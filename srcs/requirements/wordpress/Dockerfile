@@ -25,9 +25,11 @@ RUN chmod +x wp-cli.phar
 
 RUN mv wp-cli.phar /usr/local/bin/wp-cli.phar
 
-EXPOSE 8080 80
+COPY conf/www.conf etc/php/7.4/fpm/pool.d/www.conf 
 
 COPY ./tools/install.sh ./etc
+
+EXPOSE 9000
 
 CMD [ "sh", "/etc/install.sh" ]
 
