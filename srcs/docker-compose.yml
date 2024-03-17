@@ -2,15 +2,20 @@ version: "3.8"
 
 services:
   mariadb:
+    env_file:
+      - .env
     build:
       context: ./requirements/mariadb
       dockerfile: Dockerfile
+      args:
+        - WORDPRESS_DATABASE
+        - WORDPRESS_DATABASE_USER
+        - WORDPRESS_DATABASE_USER_PASSWORD
     networks:
       - inception
     expose:
       - "3306"
-    env_file:
-      - .env
+
   wordpress:
     volumes:
       - type: volume
@@ -25,8 +30,13 @@ services:
     build:
       context: ./requirements/wordpress
       dockerfile: Dockerfile
+      args:
+        - WORDPRESS_DATABASE
+        - WORDPRESS_DATABASE_USER
+        - WORDPRESS_DATABASE_USER_PASSWORD
     networks:
       - inception
+
   nginx:
     build:
       context: ./requirements/nginx

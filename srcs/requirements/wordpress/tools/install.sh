@@ -2,7 +2,7 @@
 
 sleep 3
 
-wp-cli.phar config create --dbname=testdb --dbuser=theo --dbpass=theo123 --dbhost=mariadb --path=/var/www/wordpress --allow-root
+wp-cli.phar config create --dbname=${WORDPRESS_DATABASE} --dbuser=${WORDPRESS_DATABASE_USER} --dbpass=${WORDPRESS_DATABASE_USER_PASSWORD} --dbhost=mariadb --path=/var/www/wordpress --allow-root
 
 wp-cli.phar core install --url="${URL}" --title="${TITLE}" --admin_user="${ADMIN_USER}" --admin_password="${ADMIN_PASSWORD}" --admin_email="theo.duprez.mathieu@gmail.com" --allow-root --path=/var/www/wordpress
 

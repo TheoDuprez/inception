@@ -5,6 +5,9 @@ ARG TITLE="Inception"
 ARG ADMIN_USER="test"
 ARG ADMIN_PASSWORD="test123"
 ARG ADMIN_EMAIL="theo.duprez.mathieu@gmail.com"
+ARG WORDPRESS_DATABASE
+ARG WORDPRESS_DATABASE_USER
+ARG WORDPRESS_DATABASE_USER_PASSWORD
 
 RUN apt-get update  \
     && apt-get install -y php  \

@@ -1,21 +1,21 @@
 FROM debian:11-slim
 
-EXPOSE 3306
+ARG WORDPRESS_DATABASE
+ARG WORDPRESS_DATABASE_USER
+ARG WORDPRESS_DATABASE_USER_PASSWORD
 
 RUN apt-get update  \
     && apt-get install -y mariadb-server  \
     && apt-get clean  \
     && rm -rf /var/lib/apt/lists/*
 
-
 RUN service mariadb start \
-    && mariadb -e "CREATE USER 'theo' IDENTIFIED BY 'theo123';" \
-    && mariadb -e "CREATE DATABASE testdb;" \
-    && mariadb -e "GRANT ALL PRIVILEGES ON testdb.* TO 'theo' IDENTIFIED BY 'theo123';" \
-    && mariadb -e "FLUSH PRIVILEGES;"
-RUN #service mariadb start && mariadb -e "CREATE USER theo IDENTIFIED BY 'theo123';" && mariadb -e "CREATE DATABASE testdb;" && mariadb -e "GRANT ALL PRIVILEGES ON testdb.* TO 'theo' IDENTIFIED BY 'theo123';" && mariadb -e "FLUSH PRIVILEGES;"
-RUN #echo [mysqld] >> /etc/mysql/mariadb.conf.d/50-server.cnf
+    && mariadb -u root \
+    -e "CREATE DATABASE IF NOT EXISTS ${WORDPRESS_DATABASE};" \
+    -e "CREATE USER IF NOT EXISTS '${WORDPRESS_DATABASE_USER}' IDENTIFIED BY '${WORDPRESS_DATABASE_USER_PASSWORD}';" \
+    -e "GRANT ALL PRIVILEGES ON ${WORDPRESS_DATABASE}.* TO '${WORDPRESS_DATABASE_USER}' IDENTIFIED BY '${WORDPRESS_DATABASE_USER_PASSWORD}';" \
+    -e "FLUSH PRIVILEGES;"
 
-RUN service mariadb restart
+EXPOSE 3306
 
-CMD [ "mariadbd", "--bind-address=0.0.0.0"]
+ENTRYPOINT [ "mariadbd", "--bind-address=0.0.0.0"]
