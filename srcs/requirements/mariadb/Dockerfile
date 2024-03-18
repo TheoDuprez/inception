@@ -4,9 +4,9 @@ ARG WORDPRESS_DATABASE
 ARG WORDPRESS_DATABASE_USER
 ARG WORDPRESS_DATABASE_USER_PASSWORD
 
-RUN apt-get update  \
-    && apt-get install -y mariadb-server  \
-    && apt-get clean  \
+RUN apt-get update \
+    && apt-get install -y mariadb-server \
+    && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
 RUN service mariadb start \
