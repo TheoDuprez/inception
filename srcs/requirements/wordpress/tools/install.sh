@@ -1,8 +1,6 @@
 #!/bin/bash
 
-sleep 3
-
-if [ ! -d "/var/www/wordpress" ]; then
+if [ ! -f /var/www/wordpress/wp-config.php ]; then
 
 	wp-cli.phar core download --path=/var/www/wordpress --allow-root
 

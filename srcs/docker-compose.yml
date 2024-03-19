@@ -12,46 +12,38 @@ services:
         - WORDPRESS_DATABASE
         - WORDPRESS_DATABASE_USER
         - WORDPRESS_DATABASE_USER_PASSWORD
-    networks:
-      - inception
-    expose:
-      - "3306"
     volumes:
       - mariadb:/var/lib/mysql
+    networks:
+      - inception
 
   wordpress:
     container_name: wordpress
-    volumes:
-      - wordpress:/var/www
     depends_on:
       - mariadb
     env_file:
       - .env
-    expose:
-      - "9000"
     build:
       context: ./requirements/wordpress
       dockerfile: Dockerfile
+    volumes:
+      - wordpress:/var/www
     networks:
       - inception
 
   nginx:
     container_name: nginx
+    depends_on:
+      - wordpress
     build:
       context: ./requirements/nginx
       dockerfile: Dockerfile
-    networks:
-      - inception
-    env_file:
-      - .env
-    depends_on:
-      - wordpress
-    ports:
-      - "443:443"
-    expose:
-      - "443"
     volumes:
       - wordpress:/var/www
+    networks:
+      - inception
+    ports:
+      - "443:443"
 
 volumes:
   wordpress:
@@ -66,8 +58,6 @@ volumes:
       type: none
       o: bind
       device: /home/tduprez/data/mariadb
-
-#    external: true
 
 networks:
   inception:
