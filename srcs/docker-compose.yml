@@ -12,6 +12,7 @@ services:
         - WORDPRESS_DATABASE
         - WORDPRESS_DATABASE_USER
         - WORDPRESS_DATABASE_USER_PASSWORD
+    image: mariadb
     volumes:
       - mariadb:/var/lib/mysql
     networks:
@@ -26,6 +27,7 @@ services:
     build:
       context: ./requirements/wordpress
       dockerfile: Dockerfile
+    image: wordpress
     volumes:
       - wordpress:/var/www
     networks:
@@ -38,6 +40,7 @@ services:
     build:
       context: ./requirements/nginx
       dockerfile: Dockerfile
+    image: nginx
     volumes:
       - wordpress:/var/www
     networks:
