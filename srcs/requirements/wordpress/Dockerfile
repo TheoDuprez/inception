@@ -17,4 +17,4 @@ COPY conf/www.conf etc/php/7.4/fpm/pool.d/www.conf
 
 COPY ./tools/install.sh ./etc
 
-CMD [ "sh", "/etc/install.sh" ]
+ENTRYPOINT [ "sh", "/etc/install.sh" ]
