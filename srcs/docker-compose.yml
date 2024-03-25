@@ -17,6 +17,7 @@ services:
       - mariadb:/var/lib/mysql
     networks:
       - inception
+    restart: always
 
   wordpress:
     container_name: wordpress
@@ -32,6 +33,7 @@ services:
       - wordpress:/var/www
     networks:
       - inception
+    restart: always
 
   nginx:
     container_name: nginx
@@ -47,6 +49,7 @@ services:
       - inception
     ports:
       - "443:443"
+    restart: always
 
 volumes:
   wordpress:
